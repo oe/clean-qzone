@@ -7,7 +7,7 @@
  * @return {Function}           a new fn
 */
 
-var adscount, debounce, doc, injectStyle, leftSidebar, mainFeed, onMScroll, pageContent, removeDynamicMoments, removeSingleMoment, rightSidebar, throttle;
+var adscount, debounce, injectStyle, leftSidebar, mainFeed, onMScroll, pageContent, removeDynamicMoments, removeSingleMoment, rightSidebar, throttle;
 
 debounce = function(fn, context, wait) {
   var tid;
@@ -90,22 +90,29 @@ injectStyle = function() {
   document.head.appendChild(style);
 };
 
-doc = document.body;
-
 pageContent = document.getElementById('pageContent');
 
-leftSidebar = doc.querySelector('.mod-side-nav-message');
+leftSidebar = document.querySelector('.mod-side-nav-message');
 
-rightSidebar = doc.querySelector('.col-main-sidebar');
+rightSidebar = document.querySelector('.col-main-sidebar');
 
-mainFeed = doc.querySelector('.col-main-feed');
+mainFeed = document.querySelector('.col-main-feed');
+
+onMScroll = function() {
+  var fw, top;
+  top = pageContent.getBoundingClientRect().top;
+  leftSidebar.classList[top <= 41 ? 'add' : 'remove']('cq-fixed-sidebar');
+  fw = top <= -1750;
+  rightSidebar.classList[fw ? 'add' : 'remove']('cq-hide');
+  mainFeed.classList[fw ? 'add' : 'remove']('cq-fullwidth');
+};
 
 adscount = 0;
 
 removeDynamicMoments = function() {
   var ads, adsSelector;
   adsSelector = ['.votestar', '.buy-info', '[href="http://user.qzone.qq.com/20050606"]'];
-  ads = doc.querySelectorAll(adsSelector.join(','));
+  ads = document.body.querySelectorAll(adsSelector.join(','));
   Array.prototype.forEach.call(ads, removeSingleMoment);
 };
 
@@ -120,19 +127,6 @@ removeSingleMoment = function(elem) {
       return;
     }
     elem = elem.parentElement;
-  }
-};
-
-onMScroll = function() {
-  var top;
-  top = pageContent.getBoundingClientRect().top;
-  leftSidebar.classList[top <= 41 ? 'add' : 'remove']('cq-fixed-sidebar');
-  if (top <= -1750) {
-    rightSidebar.classList.add('cq-hide');
-    mainFeed.classList.add('cq-fullwidth');
-  } else {
-    rightSidebar.classList.remove('cq-hide');
-    mainFeed.classList.remove('cq-fullwidth');
   }
 };
 
