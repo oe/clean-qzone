@@ -11,7 +11,8 @@ module.exports = (grunt)->
 // @updateURL      http://app.evecalm.com/search/googlelink.meta.js
 // @downloadURL    http://app.evecalm.com/search/googlelink.user.js
 // @version        <%= pkg.version %>
-// ==/UserScript==\n
+// ==/UserScript==
+// source code: https://github.com/evecalm/clean-qzone\n
 '''
 
   grunt.initConfig
