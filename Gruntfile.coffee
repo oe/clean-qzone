@@ -15,7 +15,7 @@ module.exports = (grunt)->
 // ==/UserScript==
 // source code: https://github.com/evecalm/clean-qzone\n
 '''
-  
+ 
   increaseVersion = (version)->
     max = 20
     vs = version.split('.').map (i)-> +i
@@ -65,7 +65,6 @@ module.exports = (grunt)->
       options:
         patterns: [
           {
-            # 实际替换的是 @@$$KK_VERSION$$
             match: '$$STYLE_TEXT$$',
             replacement: ->
               fs = require 'fs'
@@ -87,6 +86,12 @@ module.exports = (grunt)->
         src: DIST_APP_PATH + '/clean-qzone.user.coffee'
         dest: DIST_APP_PATH + '/clean-qzone.debug.user.js'
 
+    # umd包装
+    umd:
+      main:
+        template: 'umd-template.hbs'
+        src: DIST_APP_PATH + '/clean-qzone.debug.user.js'
+        dest: DIST_APP_PATH + '/clean-qzone.user.js'
 
     # 压缩JS代码
     uglify:
@@ -112,6 +117,7 @@ module.exports = (grunt)->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-replace'
   grunt.loadNpmTasks 'grunt-contrib-less'
+  grunt.loadNpmTasks 'grunt-umd'
 
   grunt.registerTask 'get-meta-file', ->
     m = banner.replace /\/UserScript==[\s\S]*$/, '/UserScript==\n'
@@ -120,6 +126,15 @@ module.exports = (grunt)->
     return
 
 
-  grunt.registerTask 'app', ['clean', 'concat', 'less', 'replace:main', 'coffee', 'uglify', 'get-meta-file']
+  grunt.registerTask 'app', [
+    'clean'
+    'concat'
+    'less'
+    'replace'
+    'coffee'
+    'umd'
+    'uglify'
+    'get-meta-file'
+  ]
 
   grunt.registerTask 'default', ['app']

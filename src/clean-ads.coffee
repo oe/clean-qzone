@@ -12,21 +12,23 @@ removeDynamicMoments = ->
     # QQ空间官方强制推广
     '[href="http://user.qzone.qq.com/20050606"]'
   ]
-  ads = document.body.querySelectorAll adsSelector.join ','
+  ads = document.querySelectorAll adsSelector.join ','
   Array::forEach.call ads, removeSingleMoment
   return
 
 
 # 移除单条广告动态
 removeSingleMoment = (elem)->
-  while elem
-    if elem.classList.contains 'f-single'
-      console.log 'remove ads(NO.' + (++adscount) +  '): ' + elem.innerText
-      if elem.parentElement then elem.parentElement.removeChild elem
-      elem = null
-      return
-    elem = elem.parentElement
+  if elem = getParent elem, 'f-single'
+    console.log 'remove ads(NO.' + (++adscount) +  '): ' + elem.innerText
+    if elem.parentElement then elem.parentElement.removeChild elem
+    elem = null
   return
 
 
+doRemoveDynamicMoments = ->
+  deRemoveDynamicAds = debounce removeDynamicMoments
 
+  do deRemoveDynamicAds
+  document.getElementById('main_feed_container').addEventListener 'DOMSubtreeModified', deRemoveDynamicAds
+  return

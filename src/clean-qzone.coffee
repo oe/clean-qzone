@@ -1,17 +1,10 @@
 # 初始化
 do ->
-  thOnscroll = throttle onMScroll, 200
+  # 不在个人主页则返回
+  return unless document.querySelector '.mod-side-nav-message'
 
-  deRemoveDynamicAds = debounce removeDynamicMoments
-  
-  if !leftSidebar then return
-  
   do injectStyle
-  do deRemoveDynamicAds
-  do thOnscroll
+  do doRemoveDynamicMoments
+  do doUXOpt
 
-  window.addEventListener 'scroll', thOnscroll
-
-  document.getElementById('main_feed_container').addEventListener 'DOMSubtreeModified', deRemoveDynamicAds
   return
-

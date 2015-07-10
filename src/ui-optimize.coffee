@@ -35,3 +35,24 @@ onMScroll = ->
   rightSidebar.classList[ if fw then 'add' else 'remove'] 'cq-hide'
   mainFeed.classList[ if fw then 'add' else 'remove'] 'cq-fullwidth'
   return
+
+# meta + enter to post a comment
+onKeyPress = (e)->
+  if e.metaKey and e.keyCode is 13 and (elem = getParent e.target, 'qz-poster-inner')
+    btn = elem.querySelector '.btn-post'
+    btn?.click()
+  return
+
+doUXOpt = ->
+  thOnscroll = throttle onMScroll
+  do thOnscroll
+  window.addEventListener 'scroll', thOnscroll
+
+  # 值针对OSX做输入框的快捷键处理
+  return unless ~navigator.userAgent.indexOf 'OS X'
+  pageContent.addEventListener 'keydown', (e)->
+    if e.target.classList.contains 'textarea' then onKeyPress e
+    return
+  , true
+  return
+  

@@ -52,6 +52,12 @@ throttle = (fn, context, wait)->
         return
       , remain
     return
+
+getParent = (elem, pClass)->
+  while elem
+    return elem if elem.classList.contains pClass
+    elem = elem.parentElement
+  return
 # 注入自定义样式
 injectStyle = ->
   
@@ -63,7 +69,7 @@ injectStyle = ->
 
   style.setAttribute 'type', 'text/css'
   # 使用grunt替换
-  style.innerText = "[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-hide{display:none !important}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.yosemite .background-container{background:none}.yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}"
+  style.innerText = "[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap,.icon-red-dot{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-hide{display:none !important}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.yosemite .background-container{background:none}.yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}"
   document.head.appendChild style
 
   return
@@ -90,6 +96,27 @@ onMScroll = ->
   mainFeed.classList[ if fw then 'add' else 'remove'] 'cq-fullwidth'
   return
 
+# meta + enter to post a comment
+onKeyPress = (e)->
+  if e.metaKey and e.keyCode is 13 and (elem = getParent e.target, 'qz-poster-inner')
+    btn = elem.querySelector '.btn-post'
+    btn?.click()
+  return
+
+doUXOpt = ->
+  thOnscroll = throttle onMScroll
+  do thOnscroll
+  window.addEventListener 'scroll', thOnscroll
+
+  # 值针对OSX做输入框的快捷键处理
+  return unless ~navigator.userAgent.indexOf 'OS X'
+  pageContent.addEventListener 'keydown', (e)->
+    if e.target.classList.contains 'textarea' then onKeyPress e
+    return
+  , true
+  return
+  
+
 # 广告计数
 adscount = 0
 
@@ -103,39 +130,34 @@ removeDynamicMoments = ->
     # QQ空间官方强制推广
     '[href="http://user.qzone.qq.com/20050606"]'
   ]
-  ads = document.body.querySelectorAll adsSelector.join ','
+  ads = document.querySelectorAll adsSelector.join ','
   Array::forEach.call ads, removeSingleMoment
   return
 
 
 # 移除单条广告动态
 removeSingleMoment = (elem)->
-  while elem
-    if elem.classList.contains 'f-single'
-      console.log 'remove ads(NO.' + (++adscount) +  '): ' + elem.innerText
-      if elem.parentElement then elem.parentElement.removeChild elem
-      elem = null
-      return
-    elem = elem.parentElement
+  if elem = getParent elem, 'f-single'
+    console.log 'remove ads(NO.' + (++adscount) +  '): ' + elem.innerText
+    if elem.parentElement then elem.parentElement.removeChild elem
+    elem = null
   return
 
 
-
-
-# 初始化
-do ->
-  thOnscroll = throttle onMScroll, 200
-
+doRemoveDynamicMoments = ->
   deRemoveDynamicAds = debounce removeDynamicMoments
-  
-  if !leftSidebar then return
-  
-  do injectStyle
+
   do deRemoveDynamicAds
-  do thOnscroll
-
-  window.addEventListener 'scroll', thOnscroll
-
   document.getElementById('main_feed_container').addEventListener 'DOMSubtreeModified', deRemoveDynamicAds
   return
 
+# 初始化
+do ->
+  # 不在个人主页则返回
+  return unless document.querySelector '.mod-side-nav-message'
+
+  do injectStyle
+  do doRemoveDynamicMoments
+  do doUXOpt
+
+  return

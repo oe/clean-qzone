@@ -52,3 +52,9 @@ throttle = (fn, context, wait)->
         return
       , remain
     return
+
+getParent = (elem, pClass)->
+  while elem
+    return elem if elem.classList.contains pClass
+    elem = elem.parentElement
+  return
