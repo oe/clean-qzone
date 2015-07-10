@@ -95,7 +95,7 @@ injectStyle = function() {
   style = document.createElement('style');
   style.id = styleId;
   style.setAttribute('type', 'text/css');
-  style.innerText = "[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap,.icon-red-dot{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-hide{display:none !important}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.yosemite .background-container{background:none}.yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}";
+  style.innerText = "[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap,.icon-red-dot,.sn-radio{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-hide{display:none !important}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.yosemite .background-container{background:none}.yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}";
   document.head.appendChild(style);
 };
 
@@ -108,12 +108,12 @@ rightSidebar = document.querySelector('.col-main-sidebar');
 mainFeed = document.querySelector('.col-main-feed');
 
 onMScroll = function() {
-  var fw, top;
+  var action, top;
   top = pageContent.getBoundingClientRect().top;
   leftSidebar.classList[top <= 41 ? 'add' : 'remove']('cq-fixed-sidebar');
-  fw = top <= -1750;
-  rightSidebar.classList[fw ? 'add' : 'remove']('cq-hide');
-  mainFeed.classList[fw ? 'add' : 'remove']('cq-fullwidth');
+  action = top <= -1750 ? 'add' : 'remove';
+  rightSidebar.classList[action]('cq-hide');
+  mainFeed.classList[action]('cq-fullwidth');
 };
 
 onKeyPress = function(e) {

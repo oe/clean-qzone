@@ -31,9 +31,9 @@ onMScroll = ->
   # 固定/取消固定左侧侧边栏
   leftSidebar.classList[ if top <= 41 then 'add' else 'remove'] 'cq-fixed-sidebar'
   # 动态展示区域是否可以以100%宽度展示
-  fw = top <= -1750
-  rightSidebar.classList[ if fw then 'add' else 'remove'] 'cq-hide'
-  mainFeed.classList[ if fw then 'add' else 'remove'] 'cq-fullwidth'
+  action = if top <= -1750 then 'add' else 'remove'
+  rightSidebar.classList[ action ] 'cq-hide'
+  mainFeed.classList[ action ] 'cq-fullwidth'
   return
 
 # meta + enter to post a comment
