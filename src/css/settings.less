@@ -1,0 +1,230 @@
+// --------- 设置页面 -----
+// 蒙层
+.cq-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,.1);
+}
+// 设置对话框
+.cq-settings-dialog {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 60%;
+  width: 60%;
+  min-width: 600px;
+  max-width: 700px;
+  margin: auto;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  // box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  background-color: rgba(249,249,249,1);
+  .cq-box-shadow;
+  color: #333;
+  border-radius: 6px;
+  font: 14px/1.6 Tahoma, Geneva, 'Simsun';
+  box-sizing: border-box;
+}
+// 侧边菜单
+.cq-sidemenu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20%;
+  height: 100%;
+
+  .title {
+    padding: 10px 6px;
+    color: #08c;
+    font-weight: bold;
+    text-align: center;
+
+  }
+  // 菜单列表
+  .cq-menus {
+    list-style: none;
+    padding: 0;
+    color: #999;
+    margin: 10px 6px 0 0;
+    // 单个菜单项
+    > li {
+      box-sizing: border-box;
+      padding: 4px 8px;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+      // 被激活的菜单
+      &.active {
+        color: #666;
+        border-left-color: #999;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+  }
+
+}
+// 关闭按钮
+.cq-settings-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 3em;
+  width: 20px;
+  height: 20px;
+
+  &:after, &:before {
+    position: absolute;
+    left: 9px;
+    content: ' ';
+    width: 3px;
+    height: 100%;
+    // color: inherit;
+    background-color: #ccc;
+    transition: all .2s linear;
+  }
+
+  &:after {
+    transform: rotate(45deg);
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+
+  &:hover:after, &:hover:before{
+    background-color: #555;
+  }
+}
+// 设置的包裹
+.cq-setting-wrapper {
+  width: 80%;
+  margin-left: 20%;
+  padding: 8px 14px 8px 0;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+// 设置内容
+.cq-setting-content {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+
+  .title {
+    font-size: 1.2em;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    
+    > small {
+      color: #777;
+      font-size: .8em;
+      margin-left: 8px;
+    }
+  }
+
+}
+// 输入框包裹
+.cq-input-wrapper {
+  margin-bottom: 10px;
+}
+
+.cq-kwds {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #888;
+  font-size: .8em;
+
+  > li {
+    display: inline-block;
+    margin-right: 4px;
+    border: 1px solid #ddd;
+    padding: 3px 12px;
+    border-radius: 16px;
+    margin-bottom: 6px;
+    cursor: default;
+
+    > .close {
+      margin-left: 2px;
+      font-size: 1.2em;
+      cursor: pointer;
+      
+      &:after {
+        content: '×'
+      }
+    }
+
+    &:hover {
+      box-shadow: 0 2px 2px #ccc;
+
+      > .close {
+      color: #333;
+    }
+    }
+  }
+}
+
+.cq-themes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  @themes-height: 46%;
+  > li {
+    position: relative;
+    display: inline-block;
+    margin-right: 1em;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    width: @themes-height;
+    padding-bottom: @themes-height / 2;
+    margin-bottom: 6px;
+    cursor: pointer;
+    vertical-align: middle;
+    overflow: hidden;
+
+    > img {
+      position: absolute;
+      top: 0;
+      .cq-yosemite-style-bg;
+      max-width: 100%;
+      height: auto;
+    }
+
+    &.cq-selected {
+      cursor: default;
+      pointer-events: none;
+
+      &:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        content: ' ';
+        background-color: rgba(255,255,255,.3);
+        z-index: 1;
+      }
+
+      &:after {
+        content: '✓';
+        font-size: 2em;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -1em;
+        margin-left: -.5em;
+        z-index: 2;
+      }
+    }
+  }
+}

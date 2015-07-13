@@ -1,7 +1,7 @@
 # 注入自定义样式
 injectStyle = ->
-  
-  styleId = 'isa-qzone-style';
+
+  styleId = 'isa-qzone-style'
   return if document.getElementById styleId
 
   style = document.createElement 'style'
@@ -43,6 +43,14 @@ onKeyPress = (e)->
     btn?.click()
   return
 
+# 禁止自动播放背景音乐
+stopBgMusic = ->
+  try
+    QZONE.music.qqplayer_play_flag = 0
+    do QZONE.music.pauseMusic
+  catch e
+
+
 doUXOpt = ->
   thOnscroll = throttle onMScroll
   do thOnscroll
@@ -55,4 +63,3 @@ doUXOpt = ->
     return
   , true
   return
-  

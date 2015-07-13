@@ -1,0 +1,68 @@
+<!-- 设置页面 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Settings</title>
+  <link rel="stylesheet" href="css/clean-qzone.css">
+</head>
+<body>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  <div class="cq-overlay">
+    <div class="cq-settings-dialog">
+      <div class="cq-settings-close"></div>
+      <div class="cq-sidemenu">
+        <div class="title">
+           Clean Qzone
+        </div>
+        <ul class="cq-menus">
+          <li class="active" data-target="cq-setting-kwds">屏蔽关键字</li>
+          <li data-target="cq-setting-theme">主题设置</li>
+        </ul>
+      </div>
+      <div class="cq-setting-wrapper">
+        <div class="cq-setting-content" id="cq-setting-kwds">
+          <div class="title">屏蔽关键字 <small>屏蔽含有关键字的动态</small></div>
+          <div class="cq-input-wrapper">
+            <label>添加关键字 <input type="text" class="cq-input"></label> <button class="cq-btn">添加</button>
+          </div>
+          <ul class="cq-kwds">
+            <li>
+              莱特币
+              <span class="close"></span>
+            </li>
+            <li>
+              莱特币
+              <span class="close"></span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cq-setting-content active" id="cq-setting-theme">
+          <div class="title">主题设置 <small>使用 OS X Yosemite风格主题</small></div>
+          <div class="cq-input-wrapper">
+            <label><input type="checkbox" id=""> 启用 Yosemite 主题, 高大上!</label>
+          </div>
+          <div class="cq-theme-choose-wrapper cq-disabled">
+            <div class="cq-input-wrapper">
+              选择下列背景图, 或者自定义图片URL
+              <input type="text" class="cq-input"> <button class="cq-btn">设置</button>
+            </div>
+            <ul class="cq-themes">
+              <li class="cq-selected"><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
+              <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
+              <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
+              <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

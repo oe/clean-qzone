@@ -7,15 +7,18 @@ module.exports = (grunt)->
 // @name           Clean Qzone
 // @namespace      com.saiya.clean-qzone
 // @description    <%= pkg.description %>
-// @match          http://user.qzone.qq.com/*
-// @include        http://user.qzone.qq.com/*
-// @updateURL      https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.meta.js
-// @downloadURL    https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js
+// @match          http://*.qzone.qq.com/*
+// @include        http://*.qzone.qq.com/*
+// @updateURL      <%= pkg.extFilePath %>/clean-qzone.meta.js
+// @downloadURL    <%= pkg.extFilePath %>/clean-qzone.user.js
 // @version        <%= pkg.version %>
 // ==/UserScript==
-// source code: https://github.com/evecalm/clean-qzone\n
+// source code: <%= pkg.repository %>\n
 '''
- 
+  update_check_url = "#{pkg.extFilePath}/clean-qzone.user.js"
+
+  
+  # 增加版本号
   increaseVersion = (version)->
     max = 20
     vs = version.split('.').map (i)-> +i
@@ -25,7 +28,12 @@ module.exports = (grunt)->
       vs[ len ] = 0
     vs.join '.'
 
-  pkg.version = increaseVersion pkg.version
+  # pkg.version = increaseVersion pkg.version
+
+  # 用户生成检查新版本的的脚本
+  updateInfo =
+    version: pkg.version
+    updateMsg: '功能优化, bug修复'
 
   banner = grunt.template.process banner, data: pkg : pkg
   grunt.initConfig
@@ -42,6 +50,7 @@ module.exports = (grunt)->
       'clean-qzone.user.coffee':
         src:[
           'src/utils.coffee'
+          'src/lstore.coffee'
           'src/ui-optimize.coffee'
           'src/clean-ads.coffee'
           'src/clean-qzone.coffee'
@@ -65,11 +74,22 @@ module.exports = (grunt)->
       options:
         patterns: [
           {
-            match: '$$STYLE_TEXT$$',
+            # 自定义样式, 实际替换的是 @@$$STYLE_TEXT$$ 下同
+            match: '$$STYLE_TEXT$$'
             replacement: ->
               fs = require 'fs'
               styleText = fs.readFileSync DIST_APP_PATH + '/clean-qzone.css', 'utf8'
               JSON.stringify styleText
+          },
+          {
+            # ext版本
+            match: '$$VERSION$$'
+            replacement: JSON.stringify pkg.version
+          },
+          {
+            # 检查更新的URL地址
+            match: '$$UPDATE_CHECK_URL$$'
+            replacement: JSON.stringify update_check_url
           }
         ]
       main:
@@ -120,8 +140,14 @@ module.exports = (grunt)->
   grunt.loadNpmTasks 'grunt-umd'
 
   grunt.registerTask 'get-meta-file', ->
+    # 更新 meta file, 方便油猴等脚本管理扩展自动更新脚本
     m = banner.replace /\/UserScript==[\s\S]*$/, '/UserScript==\n'
     grunt.file.write DIST_APP_PATH + '/clean-qzone.meta.js', m, 'utf8'
+    
+    # 更新用于检查脚本是否有新版本的 js
+    u = 'checkCqUpdate(' + JSON.stringify(updateInfo) + ')'
+    grunt.file.write DIST_APP_PATH + '/clean-qzone.check-update.js', u, 'utf8'
+    # 更新package.json 用于保存新版本
     grunt.file.write 'package.json', JSON.stringify(pkg, null, 2), 'utf8'
     return
 

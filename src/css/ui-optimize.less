@@ -1,0 +1,46 @@
+// 固定左侧侧边栏
+.cq-fixed-sidebar {
+  position: fixed;
+  width: 170px;
+  top: 41px;
+}
+
+
+// 动态展示区域100%宽度
+.cq-fullwidth {
+  -webkit-transition: width .3s linear;
+  transition: width .3s linear;
+  width: 100% !important;
+  
+  .img-box-row-wrap .img-box-row {
+    display: inline !important;
+
+    &+  .img-box-row{
+      margin-left: 4px;
+    }
+  }
+}
+
+// 优胜美地主题
+.cq-yosemite {
+
+  .cq-bg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    .cq-yosemite-style-bg;
+  }
+  
+  .background-container {
+    position: relative;
+    background: none;
+  }
+
+  .mod-side-nav {
+    box-shadow: 0 0 1px rgba(0,0,0,.07);
+    background-color: rgba(249,249,249,1);
+    border: 1px solid rgba(233,233,233,1);
+  }
+}

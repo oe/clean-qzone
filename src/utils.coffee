@@ -53,8 +53,18 @@ throttle = (fn, context, wait)->
       , remain
     return
 
+# get parent element that has class pClass
 getParent = (elem, pClass)->
   while elem
     return elem if elem.classList.contains pClass
     elem = elem.parentElement
   return
+
+# remove element from DOM tree
+removeElement = (elem)->
+  if elem and elem.parentElement
+    elem.parentElement.removeChild elem
+    true
+  else
+    false
+

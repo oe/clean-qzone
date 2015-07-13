@@ -1,0 +1,64 @@
+// 隐藏
+.cq-hide {
+  display: none !important;
+}
+// yosemite 的box-shadow
+.cq-box-shadow() {
+  box-shadow: 0 0 1px rgba(0,0,0,.07);
+}
+// yosomite 风格的高斯模糊背景
+.cq-yosemite-style-bg {
+  -webkit-filter: blur(6px) saturate(2);
+  background-size: cover;
+}
+// 禁用的效果
+.cq-disabled {
+  opacity: .6;
+  cursor: default;
+  pointer-events: none;
+}
+
+// 输入框
+.cq-input {
+  border: 1px solid #bfbfbf;
+  border-radius: 2px;
+  box-sizing: border-box;
+  color: #444;
+  font: inherit;
+  margin: 0;
+  padding: 2px 6px;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+// 按钮
+.cq-btn {
+  border: 1px solid #cfcfcf;
+  background: none;
+  // background-color: #ccc;
+  color: #666;
+  text-align: center;
+  border-radius: 3px;
+  line-height: 26px;
+  box-sizing: border-box;
+  appearance: none;
+  padding: 0 10px;
+  margin: 0;
+  height: 28px;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+
+  &:active {
+    text-decoration: none;
+    background: #f5f5f5
+  }
+}
