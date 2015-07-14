@@ -69,6 +69,7 @@ removeElement = (elem)->
     false
 
 
+
 # 插件数据存储
 lstore =
   _storeKey: 'isa-cq-settings'
@@ -257,8 +258,9 @@ Global.checkCqUpdate = (versionInfo)->
 # 插入script 检查更新
 checkUpdate = ->
   script = document.createElement 'script'
-  script.src = "https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js"
-  document.body.append script
+  script.src = "https://cdn.rawgit.com/evecalm/clean-qzone/master/dist/clean-qzone.check-update.js"
+  script.type = 'text/javascript'
+  document.body.appendChild script
   return
   
 # 初始化

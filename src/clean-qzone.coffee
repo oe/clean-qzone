@@ -13,7 +13,8 @@ Global.checkCqUpdate = (versionInfo)->
 checkUpdate = ->
   script = document.createElement 'script'
   script.src = @@$$UPDATE_CHECK_URL$$
-  document.body.append script
+  script.type = 'text/javascript'
+  document.body.appendChild script
   return
   
 # 初始化

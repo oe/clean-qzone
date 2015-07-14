@@ -20,18 +20,18 @@
         <div class="title">
            Clean Qzone
         </div>
-        <ul class="cq-menus">
+        <ul class="cq-menus" id="cq-settings-menus">
           <li class="active" data-target="cq-setting-kwds">屏蔽关键字</li>
           <li data-target="cq-setting-theme">主题设置</li>
         </ul>
       </div>
-      <div class="cq-setting-wrapper">
+      <div class="cq-setting-wrapper" id="cq-setting-wrapper">
         <div class="cq-setting-content" id="cq-setting-kwds">
           <div class="title">屏蔽关键字 <small>屏蔽含有关键字的动态</small></div>
           <div class="cq-input-wrapper">
-            <label>添加关键字 <input type="text" class="cq-input"></label> <button class="cq-btn">添加</button>
+            <label>添加关键字 <input type="text" class="cq-input" id="cq-kwd-input"></label> <button class="cq-btn" id="cq-kwd-add-btn">添加</button>
           </div>
-          <ul class="cq-kwds">
+          <ul class="cq-kwds" id="cq-kwds-list">
             <li>
               莱特币
               <span class="close"></span>
@@ -46,14 +46,14 @@
         <div class="cq-setting-content active" id="cq-setting-theme">
           <div class="title">主题设置 <small>使用 OS X Yosemite风格主题</small></div>
           <div class="cq-input-wrapper">
-            <label><input type="checkbox" id=""> 启用 Yosemite 主题, 高大上!</label>
+            <label><input type="checkbox" id="cq-theme-checkbox"> 启用 Yosemite 主题, 高大上!</label>
           </div>
-          <div class="cq-theme-choose-wrapper cq-disabled">
+          <div class="cq-theme-choose-wrapper" id="cq-theme-choose-wrapper">
             <div class="cq-input-wrapper">
               选择下列背景图, 或者自定义图片URL
-              <input type="text" class="cq-input"> <button class="cq-btn">设置</button>
+              <input type="text" class="cq-input"> <button class="cq-btn" id="cq-theme-add-btn">设置</button>
             </div>
-            <ul class="cq-themes">
+            <ul class="cq-themes" id="cq-themes-list">
               <li class="cq-selected"><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
               <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>
               <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>

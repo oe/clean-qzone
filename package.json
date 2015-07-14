@@ -5,7 +5,7 @@
   "main": "dist/clean-qzone.user.js",
   "readme": "readme.md",
   "repository": "https://github.com/evecalm/clean-qzone",
-  "extFilePath": "https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist",
+  "extFilePath": "https://cdn.rawgit.com/evecalm/clean-qzone/master/dist",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-clean": "~0.6.0",

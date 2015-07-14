@@ -277,8 +277,9 @@ Global.checkCqUpdate = function(versionInfo) {
 checkUpdate = function() {
   var script;
   script = document.createElement('script');
-  script.src = "https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js";
-  document.body.append(script);
+  script.src = "https://cdn.rawgit.com/evecalm/clean-qzone/master/dist/clean-qzone.check-update.js";
+  script.type = 'text/javascript';
+  document.body.appendChild(script);
 };
 
 (function() {

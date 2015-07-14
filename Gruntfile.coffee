@@ -15,7 +15,7 @@ module.exports = (grunt)->
 // ==/UserScript==
 // source code: <%= pkg.repository %>\n
 '''
-  update_check_url = "#{pkg.extFilePath}/clean-qzone.user.js"
+  update_check_url = "#{pkg.extFilePath}/clean-qzone.check-update.js"
 
   
   # 增加版本号
@@ -126,7 +126,7 @@ module.exports = (grunt)->
       min:
         options:
           sourceMap: false
-        src: DIST_APP_PATH + '/clean-qzone.debug.user.js'
+        src: DIST_APP_PATH + '/clean-qzone.user.js'
         dest: DIST_APP_PATH + '/clean-qzone.user.js'
 
 
