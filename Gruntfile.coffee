@@ -53,6 +53,7 @@ module.exports = (grunt)->
           'src/lstore.coffee'
           'src/ui-optimize.coffee'
           'src/clean-ads.coffee'
+          'src/settings.coffee'
           'src/clean-qzone.coffee'
         ]
         dest: DIST_APP_PATH + '/clean-qzone.user.coffee'

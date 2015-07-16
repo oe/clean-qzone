@@ -43,7 +43,7 @@ removeKwdMoments = ->
 
 # 删除单条关键节广告
 removeKwdMoment = (elem)->
-  text = elem.innerText
+  text = elem.textContent
   hasKwd = blockedKwds.some (kwd)-> ~text.indexOf kwd
 
   hasKwd and removeSingleMoment elem
@@ -56,7 +56,7 @@ removeKwdMoment = (elem)->
 removeSingleMoment = (elem)->
   if elem = getParent elem, 'f-single'
     if removeElement elem
-      console.info '%cremove ads(NO.' + (++adscount) +  '): %c' + elem.innerText, 'color:#5d7895', 'color: #333'
+      console.info '%cremove ads(NO.' + (++adscount) +  '): %c' + elem.textContent, 'color:#5d7895', 'color: #333'
     elem = null
   return
 

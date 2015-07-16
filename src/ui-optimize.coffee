@@ -9,7 +9,7 @@ injectStyle = ->
 
   style.setAttribute 'type', 'text/css'
   # 使用grunt替换
-  style.innerText = @@$$STYLE_TEXT$$
+  style.textContent = @@$$STYLE_TEXT$$
   document.head.appendChild style
 
   return

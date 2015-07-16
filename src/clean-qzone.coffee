@@ -26,4 +26,5 @@ do ->
   do doUXOpt
 
   do checkUpdate
+  do initSettingPanel
   return
