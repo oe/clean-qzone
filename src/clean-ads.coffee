@@ -60,7 +60,7 @@ removeSingleMoment = (elem)->
     elem = null
   return
 
-
+# 广告初始化
 doRemoveDynamicMoments = ->
   deRemoveAds = debounce removeAds
 

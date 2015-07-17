@@ -20,11 +20,21 @@
     }
   }
 }
+// 修正设置菜单被左侧固定的标记好友遮挡的问题
+.top-fix-inner {
+  z-index: 1010 !important;
+}
 
+// 背景图片默认隐藏
+.cq-bg {
+  display: none;
+  transition: all .5s ease-out;
+}
 // 优胜美地主题
 .cq-yosemite {
 
   .cq-bg {
+    display: block;
     position: fixed;
     top: 0;
     bottom: 0;

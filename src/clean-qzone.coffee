@@ -24,7 +24,7 @@ do ->
   return unless document.querySelector '.mod-side-nav-message'
   do doRemoveDynamicMoments
   do doUXOpt
-
+  # do stopBgMusic
   do checkUpdate
   do initSettingPanel
   return

@@ -45,11 +45,15 @@ onKeyPress = (e)->
 
 # 禁止自动播放背景音乐
 stopBgMusic = ->
-  try
+  oldFn = QZONE.frontPageAccessory.musicPlayer.bootstrap
+  QZONE.frontPageAccessory.musicPlayer.bootstrap = ->
+    oldFn.apply QZONE.frontPageAccessory.musicPlayer.bootstrap, arguments
     QZONE.music.qqplayer_play_flag = 0
     do QZONE.music.pauseMusic
-  catch e
-
+    debugger
+    console.log 'stop music'
+    return
+  return
 
 doUXOpt = ->
   thOnscroll = throttle onMScroll
