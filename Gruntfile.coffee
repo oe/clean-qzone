@@ -28,7 +28,7 @@ module.exports = (grunt)->
       vs[ len ] = 0
     vs.join '.'
 
-  # pkg.version = increaseVersion pkg.version
+  pkg.version = increaseVersion pkg.version
 
   # 用户生成检查新版本的的脚本
   updateInfo =

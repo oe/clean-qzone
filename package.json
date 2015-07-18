@@ -1,6 +1,6 @@
 {
   "name": "clean-qzone",
-  "version": "0.0.14",
+  "version": "0.0.18",
   "description": "Remove all Qzone ads, make your Qzone center clean and clear.",
   "main": "dist/clean-qzone.user.js",
   "readme": "readme.md",

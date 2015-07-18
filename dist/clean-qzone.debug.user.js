@@ -7,7 +7,7 @@
  * @return {Function}           a new fn
 */
 
-var EXT_VERSION, addSettingMenu, addTheme, adscount, attachSettingPanelEvents, blockedKwds, checkUpdate, debounce, doRemoveDynamicMoments, doUXOpt, encodeHtml, getParent, getSettingPanel, initSettingPanel, injectStyle, leftSidebar, loadImg, lstore, mainFeed, onAddKwdBtn, onAddThemeClick, onKeyPress, onMScroll, onMenuItemClick, onRemoveKwd, onSettingDlgShow, onSwitchTheme, onThemeClick, pageContent, prependKwd, refreshKwdsList, removeAds, removeElement, removeKwdMoment, removeKwdMoments, removeOfficalMoments, removeSingleMoment, resetTheme, rightSidebar, showExtUpdateAlert, stopBgMusic, throttle, toggleAllVipLogo, toggleSettingDlg, toggleTheme, updateBgImg,
+var EXT_VERSION, addSettingMenu, adscount, attachSettingPanelEvents, blockedKwds, checkUpdate, debounce, doRemoveDynamicMoments, doUXOpt, encodeHtml, getParent, getSettingPanel, initSettingPanel, initThemeList, injectStyle, leftSidebar, loadImg, lstore, mainFeed, onAddKwdBtn, onAddThemeClick, onKeyPress, onMScroll, onMenuItemClick, onRemoveKwd, onSettingDlgShow, onSwitchTheme, onThemeClick, pageContent, prependKwd, prependTheme, refreshKwdsList, removeAds, removeElement, removeKwdMoment, removeKwdMoments, removeOfficalMoments, removeSingleMoment, resetTheme, rightSidebar, showExtUpdateAlert, stopBgMusic, throttle, toggleAllVipLogo, toggleSettingDlg, toggleTheme, updateBgImg,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 debounce = function(fn, context, wait) {
@@ -103,6 +103,7 @@ encodeHtml = function(str) {
 lstore = {
   _storeKey: 'isa-cq-settings',
   kwdsKey: 'kwds',
+  bgimgsKey: 'bgimg-list',
   set: function(key, val) {
     this._data[key] = val;
     return this.save();
@@ -123,7 +124,7 @@ lstore = {
   },
   addKwd: function(kwd) {
     var kwds;
-    kwds = this.getKwds(this.kwdsKey);
+    kwds = this.getKwds();
     if (__indexOf.call(kwds, kwd) >= 0) {
       return false;
     }
@@ -133,13 +134,43 @@ lstore = {
   },
   removeKwd: function(kwd) {
     var idx, kwds;
-    kwds = this.getKwds(this.kwdsKey);
+    kwds = this.getKwds();
     idx = kwds.indexOf(kwd);
     if (!~idx) {
-      return;
+      return false;
     }
     kwds.splice(idx, 1);
-    return this.set(this.kwdsKey, kwds);
+    this.set(this.kwdsKey, kwds);
+    return true;
+  },
+  getBgimgs: function() {
+    var bgimgs;
+    bgimgs = this.get(this.bgimgsKey);
+    if (bgimgs == null) {
+      bgimgs = [];
+    }
+    return bgimgs;
+  },
+  removeBgimg: function(url) {
+    var bgimgs, idx;
+    bgimgs = this.getBgimgs();
+    idx = bgimgs.indexOf(url);
+    if (!~idx) {
+      return false;
+    }
+    bgimgs.splice(idx, 1);
+    this.set(this.bgimgsKey, bgimgs);
+    return true;
+  },
+  addBgimg: function(url) {
+    var bgimgs;
+    bgimgs = this.getBgimgs();
+    if (__indexOf.call(bgimgs, url) >= 0) {
+      return false;
+    }
+    bgimgs.unshift(url);
+    this.set(this.bgimgsKey, bgimgs);
+    return true;
   }
 };
 
@@ -158,7 +189,7 @@ injectStyle = function() {
   style = document.createElement('style');
   style.id = styleId;
   style.setAttribute('type', 'text/css');
-  style.textContent = ".cq-hide{display:none !important}.cq-yosemite-style-bg{-webkit-filter:blur(6px) saturate(2);background-size:cover}.cq-disabled{opacity:.6;cursor:default;pointer-events:none}.cq-input{border:1px solid #bfbfbf;border-radius:2px;box-sizing:border-box;color:#444;font:inherit;margin:0;padding:2px 6px;outline:none}.cq-input:focus{outline:none}.cq-btn{border:1px solid #cfcfcf;background:none;color:#666;text-align:center;border-radius:3px;line-height:26px;box-sizing:border-box;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0 10px;margin:0;height:28px;white-space:nowrap;position:relative;overflow:hidden;text-overflow:ellipsis;font-size:14px;font-family:inherit;cursor:pointer;outline:none}.cq-btn:active{text-decoration:none;background:#f5f5f5}[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap,.icon-red-dot,.sn-radio,.user-home,.mall-sp-container{display:none !important}.cq-remove-qzvip .vip-setting,.cq-remove-qzvip .qz-f-vip-l-y,.cq-remove-qzvip .detail-info-level{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.top-fix-inner{z-index:1010 !important}.cq-bg{display:none;-webkit-transition:all .5s ease-out;transition:all .5s ease-out}.cq-yosemite .cq-bg{display:block;position:fixed;top:0;bottom:0;right:0;left:0;-webkit-filter:blur(6px) saturate(2);background-size:cover}.cq-yosemite .background-container{position:relative;background:none}.cq-yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}.cq-overlay{position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,0.3);z-index:99999}.cq-settings-dialog{position:absolute;top:0;left:0;bottom:0;right:0;height:60%;width:60%;min-width:600px;max-width:700px;margin:auto;overflow:hidden;border:1px solid rgba(0,0,0,0.1);background-color:#f9f9f9;box-shadow:0 0 1px rgba(0,0,0,0.07);color:#333;border-radius:6px;font:14px/1.6 Tahoma,Geneva,'Simsun';box-sizing:border-box}.cq-sidemenu{position:absolute;left:0;top:0;width:20%;height:100%}.cq-sidemenu .title{padding:10px 6px;color:#08c;font-weight:bold;text-align:center}.cq-sidemenu .cq-menus{list-style:none;padding:0;margin:0;color:#999}.cq-sidemenu .cq-menus>li{box-sizing:border-box;padding:4px 8px;border-left:4px solid transparent;cursor:pointer}.cq-sidemenu .cq-menus>li.active{color:#666;border-left-color:#999;cursor:default;pointer-events:none}.cq-settings-close{position:absolute;top:6px;right:6px;font-size:3em;width:20px;height:20px}.cq-settings-close:after,.cq-settings-close:before{position:absolute;left:9px;content:' ';width:3px;height:100%;background-color:#ccc;-webkit-transition:all .2s linear;transition:all .2s linear}.cq-settings-close:after{-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.cq-settings-close:before{-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}.cq-settings-close:hover:after,.cq-settings-close:hover:before{background-color:#555}.cq-setting-wrapper{width:80%;margin-left:20%;padding:8px 14px 8px 0;box-sizing:border-box;height:100%;overflow:hidden;overflow-y:auto}.cq-setting-content{display:none}.cq-setting-content.active{display:block}.cq-setting-content .title{font-size:1.2em;padding:8px;border-bottom:1px solid #ccc;margin-bottom:10px}.cq-setting-content .title>small{color:#777;font-size:.8em;margin-left:8px}.cq-input-wrapper{margin-bottom:10px}.cq-kwds{list-style:none;padding:0;margin:0;color:#888;font-size:.8em}.cq-kwds>li{display:inline-block;margin-right:4px;border:1px solid #ddd;padding:3px 12px;border-radius:16px;margin-bottom:6px;cursor:default}.cq-kwds>li>.close{margin-left:2px;font-size:1.2em;cursor:pointer}.cq-kwds>li>.close:after{content:'×'}.cq-kwds>li:hover{box-shadow:0 2px 2px #ccc}.cq-kwds>li:hover>.close{color:#333}#cq-theme-choose-wrapper{margin-top:8px;opacity:.6;cursor:default;pointer-events:none}#cq-theme-ckbx:checked~#cq-theme-choose-wrapper{opacity:1;cursor:auto;pointer-events:auto}.cq-themes{list-style:none;padding:0;margin:0}.cq-themes>li{position:relative;display:inline-block;margin-right:1em;border-radius:6px;border:1px solid #ddd;width:46%;padding-bottom:23%;margin-bottom:6px;cursor:pointer;vertical-align:middle;overflow:hidden}.cq-themes>li>img{position:absolute;top:0;-webkit-filter:blur(6px) saturate(2);background-size:cover;max-width:100%;height:auto}.cq-themes>li.cq-selected{cursor:default;pointer-events:none}.cq-themes>li.cq-selected:before{position:absolute;top:0;left:0;bottom:0;right:0;content:' ';background-color:rgba(255,255,255,0.3);z-index:1}.cq-themes>li.cq-selected:after{content:'✓';font-size:2em;position:absolute;top:50%;left:50%;margin-top:-1em;margin-left:-0.5em;z-index:2}.js-enable-ibgm{opacity:.6;cursor:default;pointer-events:none}#cq-disable-bgm:checked~.js-enable-ibgm{opacity:1;cursor:auto;pointer-events:auto}";
+  style.textContent = ".cq-hide{display:none !important}.cq-yosemite-style-bg{-webkit-filter:blur(6px) saturate(2);background-size:cover}.cq-disabled{opacity:.6;cursor:default;pointer-events:none}.cq-input{border:1px solid #bfbfbf;border-radius:2px;box-sizing:border-box;color:#444;font:inherit;margin:0;padding:2px 6px;outline:none}.cq-input:focus{outline:none}.cq-btn{border:1px solid #cfcfcf;background:none;color:#666;text-align:center;border-radius:3px;line-height:26px;box-sizing:border-box;-webkit-appearance:none;-moz-appearance:none;appearance:none;padding:0 10px;margin:0;height:28px;white-space:nowrap;position:relative;overflow:hidden;text-overflow:ellipsis;font-size:14px;font-family:inherit;cursor:pointer;outline:none}.cq-btn:active{text-decoration:none;background:#f5f5f5}[data-url^=\"http://c.gdt.qq.com\"],.gdtads_box,.ck-act,.icenter-right-ad,.fn_paipai,.mod-side-nav-recently-used,.hot-msg,.msg-channel-wrapper,.user-vip-info,.gb_ad_tearing_angle,.icon_app_new,.fn_accessLog_tips,.qz-app-flag,.icon-new-fun,.hotbar_wrap,.icon-red-dot,.sn-radio,.user-home,.mall-sp-container{display:none !important}.cq-remove-qzvip .vip-setting,.cq-remove-qzvip .qz-f-vip-l-y,.cq-remove-qzvip .detail-info-level{display:none !important}.cq-fixed-sidebar{position:fixed;width:170px;top:41px}.cq-fullwidth{-webkit-transition:width .3s linear;transition:width .3s linear;width:100% !important}.cq-fullwidth .img-box-row-wrap .img-box-row{display:inline !important}.cq-fullwidth .img-box-row-wrap .img-box-row+.img-box-row{margin-left:4px}.top-fix-inner{z-index:1010 !important}.cq-bg{display:none;-webkit-transition:all .5s ease-out;transition:all .5s ease-out}.cq-yosemite .cq-bg{display:block;position:fixed;top:0;bottom:0;right:0;left:0;-webkit-filter:blur(6px) saturate(2);background-size:cover}.cq-yosemite .background-container{position:relative;background:none}.cq-yosemite .mod-side-nav{box-shadow:0 0 1px rgba(0,0,0,0.07);background-color:#f9f9f9;border:1px solid #e9e9e9}.cq-overlay{display:none;position:fixed;top:0;left:0;bottom:0;right:0;background-color:rgba(0,0,0,0.3);z-index:99999}.cq-show-setting-dlg{overflow:hidden !important}.cq-show-setting-dlg .cq-overlay{display:block}.cq-settings-dialog{position:absolute;top:0;left:0;bottom:0;right:0;height:60%;width:60%;min-width:600px;max-width:700px;margin:auto;overflow:hidden;border:1px solid rgba(0,0,0,0.1);background-color:#f9f9f9;box-shadow:0 0 1px rgba(0,0,0,0.07);color:#333;border-radius:6px;font:14px/1.6 Tahoma,Geneva,'Simsun';box-sizing:border-box}.cq-sidemenu{position:absolute;left:0;top:0;width:20%;height:100%}.cq-sidemenu .title{padding:10px 6px;color:#08c;font-weight:bold;text-align:center}.cq-sidemenu .cq-menus{list-style:none;padding:0;margin:0;color:#999}.cq-sidemenu .cq-menus>li{box-sizing:border-box;padding:4px 8px;border-left:4px solid transparent;cursor:pointer}.cq-sidemenu .cq-menus>li.active{color:#666;border-left-color:#999;cursor:default;pointer-events:none}.cq-settings-close{position:absolute;top:6px;right:6px;width:2em;height:2em}.cq-settings-close:after,.cq-settings-close:before{position:absolute;left:9px;content:' ';width:3px;height:100%;background-color:#ccc;-webkit-transition:all .2s linear;transition:all .2s linear}.cq-settings-close:after{-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.cq-settings-close:before{-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}.cq-settings-close:hover:after,.cq-settings-close:hover:before{background-color:#555}.cq-setting-wrapper{width:80%;margin-left:20%;padding:8px 14px 8px 0;box-sizing:border-box;height:100%;overflow:hidden;overflow-y:auto}.cq-setting-content{display:none}.cq-setting-content.active{display:block}.cq-setting-content .title{font-size:1.2em;padding:8px;border-bottom:1px solid #ccc;margin-bottom:10px}.cq-setting-content .title>small{color:#777;font-size:.8em;margin-left:8px}.cq-input-wrapper{margin-bottom:10px}.cq-kwds{list-style:none;padding:0;margin:0;color:#888;font-size:.8em}.cq-kwds>li{display:inline-block;margin-right:4px;border:1px solid #ddd;padding:3px 12px;border-radius:16px;margin-bottom:6px;cursor:default}.cq-kwds>li>.close{margin-left:2px;font-size:1.2em;cursor:pointer}.cq-kwds>li>.close:after{content:'×'}.cq-kwds>li:hover{box-shadow:0 2px 2px #ccc}.cq-kwds>li:hover>.close{color:#333}#cq-theme-choose-wrapper{margin-top:8px;opacity:.6;cursor:default;pointer-events:none;-webkit-transition:opacity .2s ease-in;transition:opacity .2s ease-in}#cq-theme-ckbx:checked~#cq-theme-choose-wrapper{opacity:1;cursor:auto;pointer-events:auto}#cq-theme-ckbx:checked~#cq-theme-choose-wrapper .cq-close{display:block}.cq-themes{list-style:none;padding:0;margin:0}.cq-themes>li{position:relative;display:inline-block;margin-right:1em;border-radius:6px;border:1px solid #ddd;width:46%;padding-bottom:23%;margin-bottom:6px;cursor:pointer;vertical-align:middle;overflow:hidden}.cq-themes>li>.cq-close{font-size:.6em;display:none;position:absolute;top:6px;right:6px;width:2em;height:2em;z-index:2}.cq-themes>li>.cq-close:after,.cq-themes>li>.cq-close:before{position:absolute;left:9px;content:' ';width:3px;height:100%;background-color:#ccc;-webkit-transition:all .2s linear;transition:all .2s linear}.cq-themes>li>.cq-close:after{-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.cq-themes>li>.cq-close:before{-webkit-transform:rotate(-45deg);-ms-transform:rotate(-45deg);transform:rotate(-45deg)}.cq-themes>li>.cq-close:hover:after,.cq-themes>li>.cq-close:hover:before{background-color:#555}.cq-themes>li>img{position:absolute;top:0;-webkit-filter:blur(6px) saturate(2);background-size:cover;max-width:100%;height:auto}.cq-themes>li.cq-selected{cursor:default;pointer-events:none}.cq-themes>li.cq-selected>.cq-close{display:none !important}.cq-themes>li.cq-selected:before{position:absolute;top:0;left:0;bottom:0;right:0;content:' ';background-color:rgba(255,255,255,0.3);z-index:1}.cq-themes>li.cq-selected:after{content:'✓';font-size:2em;position:absolute;top:50%;left:50%;margin-top:-1em;margin-left:-0.5em;z-index:2}.js-enable-ibgm{opacity:.6;cursor:default;pointer-events:none;-webkit-transition:opacity .2s ease-in;transition:opacity .2s ease-in}#cq-disable-bgm-ckbx:checked~.js-enable-ibgm{opacity:1;cursor:auto;pointer-events:auto}";
   document.head.appendChild(style);
 };
 
@@ -273,9 +304,7 @@ doRemoveDynamicMoments = function() {
 showExtUpdateAlert = function() {};
 
 toggleSettingDlg = function(isShow) {
-  var wp;
-  wp = getSettingPanel();
-  wp.classList[isShow ? 'remove' : 'add']('cq-hide');
+  document.documentElement.classList[isShow ? 'add' : 'remove']('cq-show-setting-dlg');
   if (isShow) {
     onSettingDlgShow();
   }
@@ -290,10 +319,9 @@ getSettingPanel = function() {
   if (getSettingPanel.wp) {
     return getSettingPanel.wp;
   }
-  html = '<div class="cq-settings-dialog">\n  <div class="cq-settings-close"></div>\n  <div class="cq-sidemenu">\n    <div class="title">\n       Clean Qzone\n    </div>\n    <ul class="cq-menus" id="cq-settings-menus">\n      <li class="active" data-target="cq-setting-kwds">屏蔽关键字</li>\n      <li data-target="cq-setting-theme">主题设置</li>\n      <li data-target="cq-setting-others">其他</li>\n    </ul>\n  </div>\n  <div class="cq-setting-wrapper" id="cq-setting-wrapper">\n    <div class="cq-setting-content active" id="cq-setting-kwds">\n      <div class="title">屏蔽关键字 <small>屏蔽含有关键字的动态</small></div>\n      <div class="cq-input-wrapper">\n        <label>添加关键字 <input type="text" class="cq-input" id="cq-kwd-input"></label> <button class="cq-btn" id="cq-kwd-add-btn">添加</button>\n      </div>\n      <ul class="cq-kwds" id="cq-kwds-list">\n      </ul>\n    </div>\n\n    <div class="cq-setting-content" id="cq-setting-theme">\n      <div class="title">主题设置 <small>使用 OS X Yosemite风格主题</small></div>\n      <input type="checkbox" id="cq-theme-ckbx"><label for="cq-theme-ckbx">启用 Yosemite 主题, 高大上!</label>\n      <div class="cq-theme-choose-wrapper" id="cq-theme-choose-wrapper">\n        <div class="cq-input-wrapper">\n          选择下列背景图, 或者自定义图片URL\n          <input type="text" class="cq-input" id="cq-themeurl-input"> <button class="cq-btn" id="cq-theme-add-btn">设置</button>\n        </div>\n        <ul class="cq-themes" id="cq-themes-list">\n          <li class="cq-selected"><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/09/10/869135.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/09/15/876900.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2013/11/27/423205.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2013/09/25/389783.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2015/03/31/1131254.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/11/28/981054.jpg"></li>\n        </ul>\n      </div>\n    </div>\n    <div id="cq-setting-others" class="cq-setting-content">\n      <div class="title">其他设置 <small><a href="https://github.com/evecalm/clean-qzone/issues/new" target="_blank">有其他功能建议?</a></small></div>\n      <div class="cq-input-wrapper">\n        <input type="checkbox" id="cq-disable-bgm-ckbx">\n        <label for="cq-disable-bgm-ckbx">禁止自动播放背景音乐</label>\n        <label class="cq-label js-enable-ibgm">\n          <input type="checkbox" id="cq-enable-ibgm-ckbx">只允许我的空间自动播放背景音乐\n        </label>\n      </div>\n\n      <div class="cq-input-wrapper">\n        <label><input type="checkbox" id="cq-disable-qvip-ckbx">移除所有黄钻相关的logo/菜单/推广</label>\n      </div>\n    </div>\n  </div>\n</div>';
+  html = '<div class="cq-settings-dialog">\n  <div class="cq-settings-close"></div>\n  <div class="cq-sidemenu">\n    <div class="title">\n       Clean Qzone\n    </div>\n    <ul class="cq-menus" id="cq-settings-menus">\n      <li class="active" data-target="cq-setting-kwds">屏蔽关键字</li>\n      <li data-target="cq-setting-theme">主题设置</li>\n      <li data-target="cq-setting-others">其他</li>\n    </ul>\n  </div>\n  <div class="cq-setting-wrapper" id="cq-setting-wrapper">\n    <div class="cq-setting-content active" id="cq-setting-kwds">\n      <div class="title">屏蔽关键字 <small>屏蔽含有关键字的动态</small></div>\n      <div class="cq-input-wrapper">\n        <label>添加关键字 <input type="text" class="cq-input" id="cq-kwd-input"></label> <button class="cq-btn" id="cq-kwd-add-btn">添加</button>\n      </div>\n      <ul class="cq-kwds" id="cq-kwds-list">\n      </ul>\n    </div>\n\n    <div class="cq-setting-content" id="cq-setting-theme">\n      <div class="title">主题设置 <small>使用 OS X Yosemite风格主题</small></div>\n      <input type="checkbox" id="cq-theme-ckbx"><label for="cq-theme-ckbx"> 启用 Yosemite 主题, 高大上!</label>\n      <div class="cq-theme-choose-wrapper" id="cq-theme-choose-wrapper">\n        <div class="cq-input-wrapper">\n          选择下列背景图, 或者自定义图片URL\n          <input type="text" class="cq-input" id="cq-themeurl-input"> <button class="cq-btn" id="cq-theme-add-btn">设置</button>\n        </div>\n        <ul class="cq-themes" id="cq-themes-list">\n          <li><img src="http://b.zol-img.com.cn/desk/bizhi/image/6/1440x900/1436338676892.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/09/10/869135.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/09/15/876900.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2013/11/27/423205.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2013/09/25/389783.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2015/03/31/1131254.jpg"></li>\n          <li><img src="http://dl.bizhi.sogou.com/images/2014/11/28/981054.jpg"></li>\n        </ul>\n      </div>\n    </div>\n    <div id="cq-setting-others" class="cq-setting-content">\n      <div class="title">其他设置 <small><a href="https://github.com/evecalm/clean-qzone/issues/new" target="_blank">有其他功能建议?</a></small></div>\n      <!--\n      <div class="cq-input-wrapper">\n        <input type="checkbox" id="cq-disable-bgm-ckbx">\n        <label for="cq-disable-bgm-ckbx">禁止自动播放背景音乐</label>\n        <label class="cq-label js-enable-ibgm">\n          <input type="checkbox" id="cq-enable-ibgm-ckbx"> 只允许我的空间自动播放背景音乐\n        </label>\n      </div>\n      -->\n      <div class="cq-input-wrapper">\n        <label><input type="checkbox" id="cq-disable-qvip-ckbx"> 移除所有黄钻相关的logo/菜单/推广</label>\n      </div>\n    </div>\n  </div>\n</div>';
   getSettingPanel.wp = document.createElement('div');
   getSettingPanel.wp.classList.add('cq-overlay');
-  getSettingPanel.wp.classList.add('cq-hide');
   getSettingPanel.wp.innerHTML = html;
   document.body.appendChild(getSettingPanel.wp);
   return getSettingPanel.wp;
@@ -423,7 +451,9 @@ onSwitchTheme = function() {
 };
 
 toggleTheme = function(enabled) {
-  return document.documentElement.classList[enabled ? 'add' : 'remove']('cq-yosemite');
+  enabled = !!enabled;
+  document.documentElement.classList[enabled ? 'add' : 'remove']('cq-yosemite');
+  lstore.set('yosemite-theme', enabled);
 };
 
 resetTheme = function() {
@@ -454,35 +484,58 @@ onAddThemeClick = function() {
   if (!(url = document.getElementById('cq-themeurl-input').value)) {
     return;
   }
-  loadImg(url, addTheme);
+  loadImg(url, function() {
+    return prependTheme(url);
+  });
 };
 
-addTheme = function(url) {
-  var img, li, themeList;
+prependTheme = function(url) {
+  var li, themeList;
+  if (!lstore.addBgimg(url)) {
+    return;
+  }
+  document.getElementById('cq-themeurl-input').value = '';
   li = document.createElement('li');
-  img = new Image();
-  img.src = url;
-  li.appendChild(img);
+  li.innerHTML = '<span class="cq-close"></span><img src="' + url + '">';
   themeList = document.getElementById('cq-themes-list');
   themeList.insertBefore(li, themeList.firstChild);
-  img.click();
+  li.querySelector('img').click();
+};
+
+initThemeList = function() {
+  var bgImgUrl, bgimgs, frg, img, themeList;
+  bgimgs = lstore.getBgimgs();
+  frg = document.createDocumentFragment();
+  bgimgs.forEach(function(bgimg) {
+    var li;
+    li = document.createElement('li');
+    li.innerHTML = '<span class="cq-close"></span><img src="' + bgimg + '">';
+    frg.appendChild(li);
+  });
+  themeList = document.getElementById('cq-themes-list');
+  themeList.insertBefore(frg, themeList.firstChild);
+  if ((bgImgUrl = lstore.get('bgimg')) && (img = themeList.querySelector('[src="' + bgImgUrl + '"]'))) {
+    img.parentElement.classList.add('cq-selected');
+  }
 };
 
 onThemeClick = function(e) {
   var li, target, _ref;
   target = e.target;
-  if (target.tagName.toLowerCase() !== 'img') {
-    return;
-  }
   li = target.parentElement;
-  if (li.classList.contains('cq-selected')) {
-    return;
+  if (target.tagName.toLowerCase() === 'img') {
+    if (li.classList.contains('cq-selected')) {
+      return;
+    }
+    if ((_ref = this.querySelector('.cq-selected')) != null) {
+      _ref.classList.remove('cq-selected');
+    }
+    li.classList.add('cq-selected');
+    updateBgImg(target.src);
+  } else if (target.classList.contains('cq-close')) {
+    lstore.removeBgimg(li.querySelector('img').src);
+    removeElement(li);
   }
-  if ((_ref = this.querySelector('.cq-selected')) != null) {
-    _ref.classList.remove('cq-selected');
-  }
-  li.classList.add('cq-selected');
-  updateBgImg(target.src);
 };
 
 updateBgImg = function(url) {
@@ -492,6 +545,7 @@ updateBgImg = function(url) {
     document.body.insertBefore(updateBgImg.wp, document.body.firstChild);
   }
   updateBgImg.wp.style.backgroundImage = "url(" + url + ")";
+  lstore.set('bgimg', url);
 };
 
 addSettingMenu = function() {
@@ -509,16 +563,30 @@ addSettingMenu = function() {
 };
 
 toggleAllVipLogo = function(isRemove) {
+  isRemove = !!isRemove;
   document.documentElement.classList[isRemove ? 'add' : 'remove']('cq-remove-qzvip');
+  lstore.set('disable-all-vip-logo', isRemove);
 };
 
 initSettingPanel = function() {
+  var bgImgUrl, enableTheme;
   getSettingPanel();
   addSettingMenu();
   attachSettingPanelEvents();
+  initThemeList();
+  if (lstore.get('disable-all-vip-logo')) {
+    toggleAllVipLogo(true);
+    document.getElementById('cq-disable-qvip-ckbx').checked = true;
+  }
+  enableTheme = lstore.get('yosemite-theme');
+  if (enableTheme && (bgImgUrl = lstore.get('bgimg'))) {
+    document.getElementById('cq-theme-ckbx').checked = true;
+    toggleTheme(enableTheme);
+    updateBgImg(bgImgUrl);
+  }
 };
 
-EXT_VERSION = "0.0.14";
+EXT_VERSION = "0.0.18";
 
 Global.checkCqUpdate = function(versionInfo) {
   if (EXT_VERSION !== versionInfo.version && versionInfo.version !== lstore.get('version')) {

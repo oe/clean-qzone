@@ -1,6 +1,7 @@
 // --------- 设置页面 -----
 // 蒙层
 .cq-overlay {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -8,6 +9,12 @@
   right: 0;
   background-color: rgba(0,0,0,.3);
   z-index: 99999;
+}
+.cq-show-setting-dlg {
+  overflow: hidden !important;
+  .cq-overlay {
+    display: block;
+  }
 }
 // 设置对话框
 .cq-settings-dialog {
@@ -75,9 +82,8 @@
   position: absolute;
   top: 6px;
   right: 6px;
-  font-size: 3em;
-  width: 20px;
-  height: 20px;
+  width: 2em;
+  height: 2em;
 
   &:after, &:before {
     position: absolute;
@@ -178,10 +184,15 @@
 #cq-theme-choose-wrapper {
   margin-top: 8px;
   .cq-disabled;
+  transition: opacity .2s ease-in;
 }
 
 #cq-theme-ckbx:checked ~ #cq-theme-choose-wrapper {
   .cq-enabled;
+
+  .cq-close {
+    display: block;
+  }
 }
 
 // 主题
@@ -203,6 +214,13 @@
     vertical-align: middle;
     overflow: hidden;
 
+    > .cq-close {
+      font-size: .6em;
+      display: none;
+      .cq-settings-close;
+      z-index: 2;
+    }
+
     > img {
       position: absolute;
       top: 0;
@@ -214,6 +232,10 @@
     &.cq-selected {
       cursor: default;
       pointer-events: none;
+
+      > .cq-close {
+        display: none !important;
+      }
 
       &:before {
         position: absolute;
@@ -242,8 +264,9 @@
 
 .js-enable-ibgm {
   .cq-disabled;
+  transition: opacity .2s ease-in;
 }
 
-#cq-disable-bgm:checked ~ .js-enable-ibgm {
+#cq-disable-bgm-ckbx:checked ~ .js-enable-ibgm {
   .cq-enabled;
 }

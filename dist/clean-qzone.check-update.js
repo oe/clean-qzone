@@ -1,1 +1,1 @@
-checkCqUpdate({"version":"0.0.14","updateMsg":"功能优化, bug修复"})
+checkCqUpdate({"version":"0.0.18","updateMsg":"功能优化, bug修复"})

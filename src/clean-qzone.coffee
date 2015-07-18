@@ -16,7 +16,7 @@ checkUpdate = ->
   script.type = 'text/javascript'
   document.body.appendChild script
   return
-  
+ 
 # 初始化
 do ->
   do injectStyle
@@ -27,4 +27,5 @@ do ->
   # do stopBgMusic
   do checkUpdate
   do initSettingPanel
+  
   return
