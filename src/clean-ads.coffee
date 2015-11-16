@@ -3,7 +3,7 @@
 adscount = 0
 
 
-lstore.addKwd '莱特币'
+# lstore.addKwd '莱特币'
 # 全局保存kwds, 避免每次读取
 blockedKwds = []
 
@@ -19,6 +19,8 @@ removeOfficalMoments = ->
     '.votestar'
     # 购物推广
     '.buy-info'
+    # 游戏推广
+    '.f-single-biz'
     # QQ空间官方强制推广
     '[href="http://user.qzone.qq.com/20050606"]'
   ]
@@ -50,7 +52,7 @@ removeKwdMoment = (elem)->
   return
 
 
-  
+
 
 # 移除单条广告动态
 removeSingleMoment = (elem)->

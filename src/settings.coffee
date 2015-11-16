@@ -1,7 +1,16 @@
 # 显示版本更新信息
-showExtUpdateAlert = ->
-
-
+showExtUpdateAlert = (info)->
+  html = '<div class="cq-update-dialog"> <div class="cq-title">Clean Qzone有更新</div> <div class="cq-version-info">官网版本' + info.version + '，当前使用的版本' + info.oldVersion + '</div> <div class="cq-update-detail"><strong>更新详情</strong>: ' + info.updateMsg + ' </div> <div class="cq-update-actions"><a href="https://github.com/evecalm/clean-qzone#安装更新" target="_blank">去更新</a> <a href="javascript:;">知道鸟</a></div>'
+  div = document.createElement 'div'
+  div.innerHTML = html
+  div = div.firstElementChild
+  div.addEventListener 'click', (e)->
+    if e.target.tagName.toLowerCase() is 'a'
+      div.classList.add 'cq-hide'
+    return
+  document.body.appendChild div
+  console.log 'show alert infoooooo'
+  return
 
 # 显示/隐藏设置对话
 toggleSettingDlg = (isShow)->
@@ -104,7 +113,7 @@ attachSettingPanelEvents = ->
   # 如对话框可见, 则隐藏, 并阻止事件冒泡, 避免暂停背景音乐
   document.addEventListener 'keydown', (e)->
     return if e.keyCode isnt 27 or e.target.tagName.toLowerCase() is 'input'
-    unless getSettingPanel().classList.contains 'cq-hide'
+    if document.documentElement.classList.contains 'cq-show-setting-dlg'
       do toggleSettingDlg
       do e.stopPropagation
     return
@@ -172,7 +181,7 @@ prependKwd  = (v)->
   li = document.createElement 'li'
   li.innerHTML = "#{encodeHtml(v)}<span class='close'></span>"
   list = document.getElementById 'cq-kwds-list'
-  list.insertBefore li, list.firstChild
+  list.insertBefore li, list.firstElementChild
   return
 
 # 删除关键字
@@ -214,7 +223,7 @@ toggleTheme = (enabled)->
 # 重置背景
 resetTheme = ->
   themeList = document.getElementById 'cq-themes-list'
-  selectedTheme = themeList.querySelector('.cq-selected') or themeList.firstChild
+  selectedTheme = themeList.querySelector('.cq-selected') or themeList.firstElementChild
   return unless selectedTheme
   selectedTheme.classList.add 'cq-selected'
   updateBgImg selectedTheme.querySelector('img').src
@@ -243,7 +252,7 @@ prependTheme = (url)->
   li = document.createElement 'li'
   li.innerHTML = '<span class="cq-close"></span><img src="' + url + '">'
   themeList = document.getElementById 'cq-themes-list'
-  themeList.insertBefore li, themeList.firstChild
+  themeList.insertBefore li, themeList.firstElementChild
   # 选中新增的主题
   do li.querySelector('img').click
   return
@@ -259,7 +268,7 @@ initThemeList = ->
     return
   
   themeList = document.getElementById 'cq-themes-list'
-  themeList.insertBefore frg, themeList.firstChild
+  themeList.insertBefore frg, themeList.firstElementChild
   
   if (bgImgUrl = lstore.get 'bgimg') and (img = themeList.querySelector '[src="' + bgImgUrl + '"]')
     img.parentElement.classList.add 'cq-selected'
@@ -286,7 +295,7 @@ updateBgImg = (url)->
   unless updateBgImg.wp and url
     updateBgImg.wp = document.createElement 'div'
     updateBgImg.wp.classList.add 'cq-bg'
-    document.body.insertBefore updateBgImg.wp, document.body.firstChild
+    document.body.insertBefore updateBgImg.wp, document.body.firstElementChild
   updateBgImg.wp.style.backgroundImage = "url(#{url})"
   lstore.set 'bgimg', url
   return
@@ -300,7 +309,7 @@ addSettingMenu = ->
   menu.addEventListener 'click', ->
     toggleSettingDlg true
     return
-  menus.insertBefore menu, menus.firstChild
+  menus.insertBefore menu, menus.firstElementChild
   return
 
 # 显示或隐藏黄钻相关的logo

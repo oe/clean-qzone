@@ -6,5 +6,5 @@
 // @include        http://*.qzone.qq.com/*
 // @updateURL      https://cdn.rawgit.com/evecalm/clean-qzone/master/dist/clean-qzone.meta.js
 // @downloadURL    https://cdn.rawgit.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js
-// @version        0.0.18
+// @version        0.1.8
 // ==/UserScript==

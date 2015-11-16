@@ -13,7 +13,7 @@ Remove all Qzone ads, make your Qzone center clean and clear.
 1. 首先, 你得使用google chrome浏览器, 国内双核浏览器未经测试, 可能无法正常运行
 2. [下载脚本](https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js), 脚本下载完成后浏览器顶部会有黄色警告提示, 请忽略之
 3. 打开chrome的扩展管理页, 如果不知道怎么打开, 可以在浏览器地址栏直接输入 `chrome://extensions/` 再回车
-4. 将下载的脚本拖入该页面, 在弹出对话框中点击确定. 如提示安全balabala, 不让安装, 勾选右上角的`开发者模式`(Developer mode)后重试
+4. 将下载的脚本拖入该页面, 在弹出对话框中点击确定. 如提示安全balabala, 不让安装, 勾选右上角的`开发者模式`(Developer mode)后重试。你也可以通过安装[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?utm_source=chrome-ntp-icon)来安装本脚本
 5. 再次打开QQ空间, 效果立现!
 
 更新脚本请重复以上步骤
