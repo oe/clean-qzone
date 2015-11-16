@@ -18,6 +18,7 @@ Remove all Qzone ads, make your Qzone center clean and clear.
 
 ### 非常规安装
 如果使用OS X版或者Linux版的Chrome可以尝试不安装 *用户脚本管理扩展*  
+
 1. 右击[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)选择 *保存链接为...* 保存脚本
 2. 打开chrome扩展管理页面（也可以在浏览器地址栏直接输入 `chrome://extensions/` 再回车）
 3. 将下载的脚本拖入该页面，幸运的话你会看到安装提示， 点击安装即可
@@ -26,7 +27,7 @@ Remove all Qzone ads, make your Qzone center clean and clear.
 
 ###更新
 * 安装了 *用户脚本管理扩展*，正常会自动更新， 若没有，请点击[安装脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)。
-* 未安装 *用户脚本管理扩展*的，再次[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)，再安装即可。
+* 未安装 *用户脚本管理扩展* 的，再次[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)，再安装即可。
 
 ## 使用/配置
 在QQ空间的个人主页, 将鼠标光标 **悬浮** 至右上角的设置图标(齿轮形状), 点击 *Clean Qzone* 即可打开脚本的设置面板
