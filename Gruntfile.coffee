@@ -6,6 +6,7 @@ module.exports = (grunt)->
 // ==UserScript==
 // @name           Clean Qzone
 // @namespace      com.saiya.clean-qzone
+// @author         <%= pkg.author.developer %>
 // @description    <%= pkg.description %>
 // @match          http://*.qzone.qq.com/*
 // @include        http://*.qzone.qq.com/*

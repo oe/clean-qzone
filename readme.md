@@ -10,13 +10,23 @@ Remove all Qzone ads, make your Qzone center clean and clear.
 * 支持使用关键字来屏蔽动态
 
 ## 安装/更新
-1. 首先, 你得使用google chrome浏览器, 国内双核浏览器未经测试, 可能无法正常运行
-2. [下载脚本](https://raw.githubusercontent.com/evecalm/clean-qzone/master/dist/clean-qzone.user.js), 脚本下载完成后浏览器顶部会有黄色警告提示, 请忽略之
-3. 打开chrome的扩展管理页, 如果不知道怎么打开, 可以在浏览器地址栏直接输入 `chrome://extensions/` 再回车
-4. 将下载的脚本拖入该页面, 在弹出对话框中点击确定. 如提示安全balabala, 不让安装, 勾选右上角的`开发者模式`(Developer mode)后重试。你也可以通过安装[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?utm_source=chrome-ntp-icon)来安装本脚本
-5. 再次打开QQ空间, 效果立现!
+### 常规安装
+1. 首先, 你得使用[Google Chrome](https://www.google.com/chrome/)或者[Firefox](https://www.mozilla.org/firefox/), 国内双核浏览器未经测试, 可能无法正常运行
+2. 安装 *用户脚本管理扩展*，Chrome用户请安装[Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?utm_source=chrome-ntp-icon)，Firefox用户请安装[Greasemonkey](https://addons.mozilla.org/firefox/addon/greasemonkey/)
+3. 点击[安装脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js), 用户脚本管理扩展会提示安装，确认即可
+4. 再次打开QQ空间, 效果立现!
 
-更新脚本请重复以上步骤
+### 非常规安装
+如果使用OS X版或者Linux版的Chrome可以尝试不安装 *用户脚本管理扩展*  
+1. 右击[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)选择 *保存链接为...* 保存脚本
+2. 打开chrome扩展管理页面（也可以在浏览器地址栏直接输入 `chrome://extensions/` 再回车）
+3. 将下载的脚本拖入该页面，幸运的话你会看到安装提示， 点击安装即可
+
+因为Chrome的安全策略一直在变化，此种安装方法可能在新版本的chrome中失效，若失败则请使用[常规安装](#常规安装)
+
+###更新
+* 安装了 *用户脚本管理扩展*，正常会自动更新， 若没有，请点击[安装脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)。
+* 未安装 *用户脚本管理扩展*的，再次[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)，再安装即可。
 
 ## 使用/配置
 在QQ空间的个人主页, 将鼠标光标 **悬浮** 至右上角的设置图标(齿轮形状), 点击 *Clean Qzone* 即可打开脚本的设置面板

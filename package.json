@@ -1,11 +1,11 @@
 {
   "name": "clean-qzone",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "Remove all Qzone ads, make your Qzone center clean and clear.",
   "main": "dist/clean-qzone.user.js",
   "readme": "readme.md",
   "repository": "https://github.com/evecalm/clean-qzone",
-  "extFilePath": "https://cdn.rawgit.com/evecalm/clean-qzone/master/dist",
+  "extFilePath": "https://http://app.evecalm.com/clean-qzone/dist",
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-clean": "~0.6.0",
@@ -21,7 +21,7 @@
   },
   "author": {
     "company": "evecalm.com",
-    "developer": "Saiya, me@evecalm.com"
+    "developer": "Saiya"
   },
   "license": "MIT"
 }

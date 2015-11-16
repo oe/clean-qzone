@@ -280,7 +280,7 @@ doRemoveDynamicMoments = ->
 
 # 显示版本更新信息
 showExtUpdateAlert = (info)->
-  html = '<div class="cq-update-dialog"> <div class="cq-title">Clean Qzone有更新</div> <div class="cq-version-info">官网版本' + info.version + '，当前使用的版本' + info.oldVersion + '</div> <div class="cq-update-detail"><strong>更新详情</strong>: ' + info.updateMsg + ' </div> <div class="cq-update-actions"><a href="https://github.com/evecalm/clean-qzone#安装更新" target="_blank">去更新</a> <a href="javascript:;">知道鸟</a></div>'
+  html = '<div class="cq-update-dialog"> <div class="cq-title">Clean Qzone有更新</div> <div class="cq-version-info">官网版本' + info.version + '，当前使用的版本' + info.oldVersion + '</div> <div class="cq-update-detail"><strong>更新详情</strong>: ' + info.updateMsg + ' </div> <div class="cq-update-actions"><a href="https://github.com/evecalm/clean-qzone#更新" target="_blank">去更新</a> <a href="javascript:;">知道鸟</a></div>'
   div = document.createElement 'div'
   div.innerHTML = html
   div = div.firstElementChild
@@ -619,7 +619,7 @@ initSettingPanel = ->
   return
   
 # 扩展版本, 用来判断是否有更新
-EXT_VERSION = "0.1.8"
+EXT_VERSION = "0.1.10"
 
 # 比较版本号，判断是否有更新
 compareVersion = (onlineVer)->
@@ -644,7 +644,7 @@ Global.checkCqUpdate = (versionInfo)->
 # 插入script 检查更新
 checkUpdate = ->
   script = document.createElement 'script'
-  script.src = "https://cdn.rawgit.com/evecalm/clean-qzone/master/dist/clean-qzone.check-update.js"
+  script.src = "https://http://app.evecalm.com/clean-qzone/dist/clean-qzone.check-update.js"
   document.body.appendChild script
   return
 
