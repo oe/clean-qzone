@@ -8,8 +8,8 @@ module.exports = (grunt)->
 // @namespace      com.saiya.clean-qzone
 // @author         <%= pkg.author.developer %>
 // @description    <%= pkg.description %>
-// @match          http://*.qzone.qq.com/*
-// @include        http://*.qzone.qq.com/*
+// @match          *://*.qzone.qq.com/*
+// @include        *://*.qzone.qq.com/*
 // @updateURL      <%= pkg.extFilePath %>/clean-qzone.meta.js
 // @downloadURL    <%= pkg.extFilePath %>/clean-qzone.user.js
 // @version        <%= pkg.version %>

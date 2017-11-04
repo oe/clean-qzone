@@ -25,7 +25,7 @@ Remove all Qzone ads, make your Qzone center clean and clear.
 
 因为Chrome的安全策略一直在变化，此种安装方法可能在新版本的chrome中失效，若失败则请使用[常规安装](#常规安装)
 
-###更新
+### 更新
 * 安装了 *用户脚本管理扩展*，正常会自动更新， 若没有，请点击[安装脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)。
 * 未安装 *用户脚本管理扩展* 的，再次[下载脚本](http://app.evecalm.com/clean-qzone/dist/clean-qzone.user.js)，再安装即可。
 
