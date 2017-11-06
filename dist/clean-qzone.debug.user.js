@@ -597,7 +597,7 @@ initSettingPanel = function() {
   }
 };
 
-EXT_VERSION = "0.1.11";
+EXT_VERSION = "0.1.12";
 
 compareVersion = function(onlineVer) {
   var i, localVer;
@@ -624,7 +624,7 @@ Global.checkCqUpdate = function(versionInfo) {
 checkUpdate = function() {
   var script;
   script = document.createElement('script');
-  script.src = "https://http://app.evecalm.com/clean-qzone/dist/clean-qzone.check-update.js";
+  script.src = "http://app.evecalm.com/clean-qzone/dist/clean-qzone.check-update.js";
   document.body.appendChild(script);
 };
 

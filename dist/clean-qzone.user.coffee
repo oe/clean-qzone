@@ -619,7 +619,7 @@ initSettingPanel = ->
   return
   
 # 扩展版本, 用来判断是否有更新
-EXT_VERSION = "0.1.11"
+EXT_VERSION = "0.1.12"
 
 # 比较版本号，判断是否有更新
 compareVersion = (onlineVer)->
@@ -644,7 +644,7 @@ Global.checkCqUpdate = (versionInfo)->
 # 插入script 检查更新
 checkUpdate = ->
   script = document.createElement 'script'
-  script.src = "https://http://app.evecalm.com/clean-qzone/dist/clean-qzone.check-update.js"
+  script.src = "http://app.evecalm.com/clean-qzone/dist/clean-qzone.check-update.js"
   document.body.appendChild script
   return
 
