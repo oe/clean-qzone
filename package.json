@@ -7,7 +7,7 @@
   "repository": "https://github.com/evecalm/clean-qzone",
   "extFilePath": "http://app.evecalm.com/clean-qzone/dist",
   "devDependencies": {
-    "grunt": "~0.4.5",
+    "grunt": "~1.3.0",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-contrib-concat": "~0.3.0",
